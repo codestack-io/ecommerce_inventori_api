@@ -9,30 +9,36 @@ const {
   deleteProduct,
 } = require("../controllers/product.controller");
 
+const authorizeRoles = require("../middlewares/role.middleware");
 const validateProduct = require("../middlewares/validate.middleware");
 const productSchema = require("../validations/product.validator");
+const authMiddleware = require("../middlewares/auth.middleware");
+// Anyone authenticated can view products
+router.get("/", authMiddleware, getAllProducts);
+router.get("/:id", authMiddleware, getProductById);
 
-// Create Product
+// Only admins can modify products
 router.post(
   "/",
+  authMiddleware,
+  authorizeRoles("admin"),
   validateProduct(productSchema),
   createProduct
 );
 
-// Get All Products
-router.get("/", getAllProducts);
-
-// Get Product By ID
-router.get("/:id", getProductById);
-
-// Update Product
 router.put(
   "/:id",
+  authMiddleware,
+  authorizeRoles("admin"),
   validateProduct(productSchema),
   updateProduct
 );
 
-// Delete Product
-router.delete("/:id", deleteProduct);
+router.delete(
+  "/:id",
+  authMiddleware,
+  authorizeRoles("admin"),
+  deleteProduct
+);
 
 module.exports = router;

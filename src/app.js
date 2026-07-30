@@ -7,7 +7,7 @@ const inventoryRoutes = require("./routes/inventory.routes");
 const errorHandler = require("./middlewares/errorHandler");
 const rateLimiter = require("./middlewares/rateLimiter");
 const errorMiddleware = require("./middlewares/error.middleware");
-
+const authRoutes = require("./routes/auth.routes");
 const app = express();
 
 // Middleware
@@ -16,6 +16,7 @@ app.use(express.json());
 
 // Routes
 app.use(rateLimiter);
+app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/inventory", inventoryRoutes);

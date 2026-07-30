@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const authMiddleware = require("../middlewares/auth.middleware");
+const authorizeRoles = require("../middlewares/role.middleware");
 
 const {
   getInventory,
@@ -7,13 +9,23 @@ const {
   updateStock,
 } = require("../controllers/inventory.controller");
 
-// Get all inventory
-router.get("/", getInventory);
+router.get(
+  "/",
+  authMiddleware,
+  getInventory
+);
 
-// Get low-stock products
-router.get("/low-stock", getLowStockProducts);
+router.get(
+  "/low-stock",
+  authMiddleware,
+  getLowStockProducts
+);
 
-// Add or subtract stock
-router.patch("/:id/stock", updateStock);
+router.patch(
+  "/:id/stock",
+  authMiddleware,
+  authorizeRoles("admin"),
+  updateStock
+);
 
 module.exports = router;
