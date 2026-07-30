@@ -6,6 +6,8 @@ const orderRoutes = require("./routes/order.routes");
 const inventoryRoutes = require("./routes/inventory.routes");
 const errorHandler = require("./middlewares/errorHandler");
 const rateLimiter = require("./middlewares/rateLimiter");
+const errorMiddleware = require("./middlewares/error.middleware");
+
 const app = express();
 
 // Middleware
