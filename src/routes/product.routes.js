@@ -9,7 +9,7 @@ const {
   deleteProduct,
 } = require("../controllers/product.controller");
 const validateProduct = require("../middlewares/validate.middleware");
-const productSchema = require("../validators/product.validator");
+const productSchema = require("../validations/product.validator");
 
 
 // Create Product
