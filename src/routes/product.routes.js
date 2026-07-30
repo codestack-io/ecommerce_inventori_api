@@ -8,9 +8,16 @@ const {
   updateProduct,
   deleteProduct,
 } = require("../controllers/product.controller");
+const validateProduct = require("../middlewares/validate.middleware");
+const productSchema = require("../validators/product.validator");
+
 
 // Create Product
-router.post("/", createProduct);
+router.post(
+  "/",
+  validateProduct(productSchema),
+  createProduct
+);
 
 // Get All Products
 router.get("/", getAllProducts);
@@ -19,7 +26,11 @@ router.get("/", getAllProducts);
 router.get("/:id", getProductById);
 
 // Update Product
-router.put("/:id", updateProduct);
+router.put(
+  "/:id",
+  validateProduct(productSchema),
+  updateProduct
+);
 
 // Delete Product
 router.delete("/:id", deleteProduct);
