@@ -8,9 +8,9 @@ const {
   updateProduct,
   deleteProduct,
 } = require("../controllers/product.controller");
+
 const validateProduct = require("../middlewares/validate.middleware");
 const productSchema = require("../validations/product.validator");
-
 
 // Create Product
 router.post(

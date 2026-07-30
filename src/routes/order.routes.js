@@ -5,15 +5,25 @@ const {
   createOrder,
   getAllOrders,
   getOrderById,
+  updateOrderStatus,
+  deleteOrder,
 } = require("../controllers/order.controller");
 
-// Create Order
-router.post("/", createOrder);
+const validate = require("../middlewares/validate.middleware");
+const orderSchema = require("../validations/order.validator");
 
-// Get All Orders
+router.post(
+  "/",
+  validate(orderSchema),
+  createOrder
+);
+
 router.get("/", getAllOrders);
 
-// Get Order By ID
 router.get("/:id", getOrderById);
+
+router.put("/:id/status", updateOrderStatus);
+
+router.delete("/:id", deleteOrder);
 
 module.exports = router;
